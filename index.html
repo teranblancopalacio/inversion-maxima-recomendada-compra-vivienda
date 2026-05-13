@@ -20,14 +20,41 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        
+        /* Reglas específicas para la generación del PDF */
+        @media print {
+            .no-print { display: none !important; }
+            * { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+            body { background-color: white !important; }
+            main { display: block !important; } /* Apila las columnas para formato A4 */
+            .lg\:col-span-5, .lg\:col-span-7, .lg\:col-span-12 { 
+                margin-bottom: 2rem !important; 
+                page-break-inside: avoid; /* Evita que las tarjetas se corten a la mitad de la página */
+            }
+            #debug_content { display: grid !important; } /* Fuerza a que la auditoría salga siempre en el PDF */
+            
+            /* Ajustes estéticos menores para papel */
+            .shadow-sm, .shadow-lg { box-shadow: none !important; border: 1px solid #e2e8f0; }
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen pb-12">
 
     <header class="bg-brand-900 text-white py-8 shadow-md">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-baseline">
             <h1 class="text-3xl font-bold tracking-tight">Estudio de Viabilidad Financiera</h1>
-            <p class="mt-2 text-brand-100 text-lg">Calcula la inversión máxima saludable para la compra o promoción de tu vivienda.</p>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <p class="text-brand-100 text-lg">Calcula la inversión máxima saludable para la compra o promoción de tu vivienda.</p>
+            
+            <!-- Botón de Generar PDF -->
+            <button onclick="window.print()" class="no-print bg-white text-brand-900 px-5 py-2.5 rounded-lg shadow-sm font-semibold text-sm hover:bg-brand-50 transition flex items-center w-fit">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                Generar Informe PDF
+            </button>
         </div>
     </header>
 
@@ -224,7 +251,7 @@
         <div class="lg:col-span-12 bg-slate-900 text-slate-300 p-6 rounded-2xl shadow-sm mt-4 border border-slate-800 font-mono text-sm transition-all duration-300">
             <h3 class="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2 flex items-center justify-between">
                 <span>Panel de Auditoría Matemática</span>
-                <button id="toggle_debug" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-sans px-3 py-1.5 rounded transition shadow">Ocultar / Mostrar Detalle</button>
+                <button id="toggle_debug" class="no-print text-xs bg-brand-600 hover:bg-brand-500 text-white font-sans px-3 py-1.5 rounded transition shadow">Ocultar / Mostrar Detalle</button>
             </h3>
             
             <div id="debug_content" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
