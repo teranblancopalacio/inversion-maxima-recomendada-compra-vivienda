@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Viabilidad Inmobiliaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen pb-12">
+
+    <header class="bg-brand-900 text-white py-8 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold tracking-tight">Estudio de Viabilidad Financiera</h1>
+            <p class="mt-2 text-brand-100 text-lg">Calcula la inversión máxima saludable para la compra o promoción de tu vivienda.</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-5 space-y-6">
+            
+            <!-- Bloque 1: Fiscalidad y Tipo de Compra -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-xl font-semibold mb-4 text-slate-800 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    Datos de la Operación
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Comunidad Autónoma</label>
+                        <select id="ccaa" class="w-full rounded-lg border-slate-300 border p-2.5 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <!-- Rellenado por JS -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Tipo de Inmueble</label>
+                        <select id="tipo_inmueble" class="w-full rounded-lg border-slate-300 border p-2.5 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <option value="segunda_mano">Segunda Mano (ITP)</option>
+                            <option value="obra_nueva_libre">Obra Nueva Libre (IVA 10%)</option>
+                            <option value="obra_nueva_vpo">Obra Nueva VPO (IVA 4%)</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Edad Mayor Comprador</label>
+                            <input type="number" id="edad" value="40" class="w-full rounded-lg border-slate-300 border p-2.5 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">¿Inversor (Flipping)?</label>
+                            <select id="flipping" class="w-full rounded-lg border-slate-300 border p-2.5 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                                <option value="no">No</option>
+                                <option value="si">Sí (Reventa)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque 2: Poder Adquisitivo -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-xl font-semibold mb-4 text-slate-800 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Poder Adquisitivo
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Ingresos Netos (Hogar / mes)</label>
+                        <div class="relative">
+                            <input type="number" id="ingresos" value="3500" class="w-full rounded-lg border-slate-300 border p-2.5 pl-8 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute left-3 top-2.5 text-slate-400">€</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Ahorros Totales Disponibles</label>
+                        <div class="relative">
+                            <input type="number" id="ahorros" value="50000" class="w-full rounded-lg border-slate-300 border p-2.5 pl-8 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute left-3 top-2.5 text-slate-400">€</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Deudas Actuales (Préstamos / mes)</label>
+                        <div class="relative">
+                            <input type="number" id="deudas" value="0" class="w-full rounded-lg border-slate-300 border p-2.5 pl-8 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute left-3 top-2.5 text-slate-400">€</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque 3: Condiciones Hipotecarias -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-xl font-semibold mb-4 text-slate-800 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Hipotéticas Condiciones (Banco)
+                </h2>
+                
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Tipo de Interés</label>
+                        <div class="relative">
+                            <input type="number" step="0.1" id="interes" value="3.0" class="w-full rounded-lg border-slate-300 border p-2.5 pr-8 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute right-3 top-2.5 text-slate-400">%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Plazo Hipoteca</label>
+                        <div class="relative">
+                            <input type="number" id="plazo" value="30" class="w-full rounded-lg border-slate-300 border p-2.5 pr-12 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute right-3 top-2.5 text-slate-400">Años</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1" title="Porcentaje del precio de compra que financia el banco">Financiación Máx. (LTV)</label>
+                        <div class="relative">
+                            <input type="number" id="ltv_banco" value="80" class="w-full rounded-lg border-slate-300 border p-2.5 pr-8 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute right-3 top-2.5 text-slate-400">%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1" title="Porcentaje de tus ingresos netos que puedes destinar a deuda">Límite Endeudamiento</label>
+                        <div class="relative">
+                            <input type="number" id="ratio_endeudamiento" value="35" class="w-full rounded-lg border-slate-300 border p-2.5 pr-8 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 transition">
+                            <span class="absolute right-3 top-2.5 text-slate-400">%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Dashboard Principal -->
+            <div class="bg-brand-900 rounded-3xl shadow-lg p-8 text-white relative overflow-hidden">
+                <!-- Decorative background -->
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-brand-600 rounded-full opacity-50 blur-2xl"></div>
+                
+                <h2 class="text-brand-100 text-lg font-medium mb-1">Inversión Máxima Recomendada</h2>
+                <p class="text-sm text-brand-100 mb-4">(Precio Máximo de Compra de la Vivienda)</p>
+                
+                <div class="text-5xl lg:text-6xl font-bold tracking-tight mb-6" id="res_precio_max">
+                    0 €
+                </div>
+
+                <div class="grid grid-cols-2 gap-6 border-t border-brand-600 pt-6">
+                    <div>
+                        <p class="text-brand-100 text-sm mb-1" id="res_cuota_label">Cuota de esta Hipoteca</p>
+                        <p class="text-2xl font-semibold" id="res_cuota">0 €</p>
+                        <p class="text-xs text-brand-100 mt-1" id="res_cuota_sub">Límite saludable: 0 €</p>
+                    </div>
+                    <div>
+                        <p class="text-brand-100 text-sm mb-1">Préstamo Máx. Banco</p>
+                        <p class="text-2xl font-semibold" id="res_prestamo">0 €</p>
+                        <p class="text-xs text-brand-100 mt-1" id="res_ltv_text">Limitado al 80% LTV</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desglose de Operación -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4 border-b pb-2">Desglose de la Operación (Simulación)</h3>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                        <span class="text-slate-600 font-medium">Aportación de Ahorros (Entrada)</span>
+                        <span class="font-semibold text-slate-800" id="res_entrada">0 €</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                        <span class="text-slate-600 font-medium">Impuestos (<span id="label_impuesto">ITP</span>)</span>
+                        <span class="font-semibold text-red-500" id="res_impuestos">0 €</span>
+                    </div>
+
+                    <!-- NUEVA FILA PARA EL AJD (Oculta por defecto) -->
+                    <div id="row_ajd" class="flex justify-between items-center p-3 bg-slate-50 rounded-lg hidden">
+                        <span class="text-slate-600 font-medium">Impuesto AJD (<span id="label_ajd">AJD</span>)</span>
+                        <span class="font-semibold text-red-500" id="res_ajd">0 €</span>
+                    </div>
+
+                    <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                        <span class="text-slate-600 font-medium">Notaría, Registro y Tasación (~1.5%)</span>
+                        <span class="font-semibold text-red-500" id="res_gastos_fijos">0 €</span>
+                    </div>
+
+                    <div class="flex justify-between items-center p-3 bg-slate-100 rounded-lg mt-4 border border-slate-200">
+                        <span class="text-slate-700 font-bold">Ahorros Totales Consumidos</span>
+                        <span class="font-bold text-slate-900" id="res_ahorros_consumidos">0 €</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 bg-blue-50 text-blue-800 rounded-xl text-sm leading-relaxed border border-blue-100">
+                    <p><strong>💡 Nota para el proyecto arquitectónico:</strong> Si el valor de compra es inferior a la Inversión Máxima Recomendada, la diferencia de capacidad de endeudamiento podría destinarse a financiar la reforma mediante un producto hipotecario específico.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Panel de Desglose Matemático (Debug / Auditoría) -->
+        <div class="lg:col-span-12 bg-slate-900 text-slate-300 p-6 rounded-2xl shadow-sm mt-4 border border-slate-800 font-mono text-sm transition-all duration-300">
+            <h3 class="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2 flex items-center justify-between">
+                <span>Panel de Auditoría Matemática</span>
+                <button id="toggle_debug" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-sans px-3 py-1.5 rounded transition shadow">Ocultar / Mostrar Detalle</button>
+            </h3>
+            
+            <div id="debug_content" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <!-- Columna 1 -->
+                <div class="space-y-4">
+                    <div class="bg-slate-800 p-4 rounded-lg shadow-inner">
+                        <p class="text-brand-400 font-bold mb-2">1. Cuota Máxima Recomendada</p>
+                        <p class="text-xs text-slate-400 mb-1" id="dbg_formula_cuota">Fórmula: (Ingresos * 35%) - Deudas</p>
+                        <p>Cálculo: (<span id="dbg_ingresos" class="text-white">0</span> € * <span id="dbg_ratio_val" class="text-white">0.35</span>) - <span id="dbg_deudas" class="text-white">0</span> € = <span class="text-brand-300 font-bold text-base" id="dbg_cuota">0</span> €/mes</p>
+                    </div>
+                    
+                    <div class="bg-slate-800 p-4 rounded-lg shadow-inner">
+                        <p class="text-brand-400 font-bold mb-2">2. Préstamo Máx. (Capacidad de Pago)</p>
+                        <p class="text-xs text-slate-400 mb-1">Fórmula: VA(Tasa Mensual, Meses, -Cuota)</p>
+                        <p>Cálculo: VA(<span id="dbg_tasa_mensual" class="text-white">0</span>%, <span id="dbg_meses" class="text-white">0</span>, -<span id="dbg_cuota_va" class="text-white">0</span> €) = <span class="text-brand-300 font-bold text-base" id="dbg_prestamo_cap">0</span> €</p>
+                    </div>
+
+                    <div class="bg-slate-800 p-4 rounded-lg shadow-inner">
+                        <p class="text-brand-400 font-bold mb-2">3. Determinación de Impuestos</p>
+                        <p class="text-xs text-slate-400 mb-1">Regla fiscal detectada según CCAA y Tipología:</p>
+                        <p class="mb-1 text-white" id="dbg_regla_impuesto">-</p>
+                        <p>Tipo Aplicado Final: <span class="text-brand-300 font-bold" id="dbg_tipo_impuesto">-</span></p>
+                    </div>
+                </div>
+
+                <!-- Columna 2 -->
+                <div class="space-y-4">
+                    <div class="bg-slate-800 p-4 rounded-lg shadow-inner">
+                        <p class="text-brand-400 font-bold mb-2">4. Verificación del Cuello de Botella</p>
+                        <p class="text-xs text-slate-400 mb-3">El algoritmo ajusta iterativamente el precio (P) hasta que Fondos Necesarios = Fondos Disponibles.</p>
+                        
+                        <div class="border-l-2 border-brand-500 pl-3">
+                            <p><strong>Para P = <span id="dbg_precio_final" class="text-green-400 text-base">0</span> €</strong></p>
+                            
+                            <p class="mt-2 text-xs text-slate-400 font-semibold uppercase">A. Fondos Necesarios (Lo que cuesta)</p>
+                            <p class="text-sm">Precio (<span id="dbg_precio_final_2">0</span> €) + Impuestos (<span id="dbg_impuestos_calc">0</span> €) + Gastos Fijos 1.5% (<span id="dbg_fijos_calc">0</span> €) = <span id="dbg_necesarios" class="text-white font-bold">0</span> €</p>
+                            
+                            <p class="mt-2 text-xs text-slate-400 font-semibold uppercase">B. Fondos Disponibles (Lo que hay)</p>
+                            <p class="text-sm">Ahorros (<span id="dbg_ahorros">0</span> €) + Préstamo Real (<span id="dbg_prestamo_real">0</span> €) = <span id="dbg_disponibles" class="text-white font-bold">0</span> €</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-800 p-4 rounded-lg shadow-inner">
+                        <p class="text-brand-400 font-bold mb-2">5. Filtro del Préstamo Real</p>
+                        <div class="grid grid-cols-2 gap-2 text-xs mb-2">
+                            <div id="dbg_ltv_container">Límite Banco (80% P):<br><span id="dbg_ltv" class="text-white text-sm">0</span> €</div>
+                            <div>Límite Ingresos (VA):<br><span id="dbg_prestamo_cap_2" class="text-white text-sm">0</span> €</div>
+                        </div>
+                        <p class="text-sm border-t border-slate-600 pt-2">Se utiliza el menor: <span class="text-brand-300 font-bold text-base" id="dbg_prestamo_utilizado">0</span> €</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- 1. BASE DE DATOS DE IMPUESTOS (CCAA) ---
+        const taxData = {
+            "Andalucía": { itpG: 0.07, itpJ: 0.035, limJ: 35, ajdG: 0.012, ajdJ: 0.003, flip: 0.02 },
+            "Aragón": { itpG: "prog_aragon", itpJ: 0.04, limJ: 35, ajdG: 0.015, ajdJ: 0.015, flip: 0.02 },
+            "Asturias": { itpG: "prog_asturias", itpJ: 0.06, limJ: 35, ajdG: 0.012, ajdJ: 0.012, flip: null }, 
+            "Baleares": { itpG: "prog_baleares", itpJ: 0.04, limJ: 30, ajdG: 0.015, ajdJ: 0.012, flip: 0.02 },
+            "Canarias": { itpG: 0.065, itpJ: 0.05, limJ: 35, ajdG: 0.0075, ajdJ: 0.004, flip: null, isIgic: true },
+            "Cantabria": { itpG: 0.09, itpJ: 0.04, limJ: 36, ajdG: 0.015, ajdJ: 0.0015, flip: null },
+            "Castilla-La Mancha": { itpG: 0.09, itpJ: 0.05, limJ: 36, ajdG: 0.015, ajdJ: 0.0015, flip: null },
+            "Castilla y León": { itpG: 0.08, itpJ: 0.04, limJ: 36, ajdG: 0.015, ajdJ: 0.005, flip: null },
+            "Cataluña": { itpG: "prog_catalunya", itpJ: 0.05, limJ: 32, ajdG: 0.015, ajdJ: 0.005, flip: 0.03 }, 
+            "Madrid": { itpG: 0.06, itpJ: 0.06, limJ: 0, ajdG: 0.0075, ajdJ: 0.0075, flip: 0.02 },
+            "C. Valenciana": { itpG: 0.10, itpJ: 0.06, limJ: 35, ajdG: 0.015, ajdJ: 0.001, flip: 0.02 },
+            "Extremadura": { itpG: "prog_extremadura", itpJ: 0.04, limJ: 36, ajdG: 0.015, ajdJ: 0.001, flip: null },
+            "Galicia": { itpG: 0.08, itpJ: 0.03, limJ: 36, ajdG: 0.015, ajdJ: 0.005, flip: null },
+            "La Rioja": { itpG: 0.07, itpJ: 0.05, limJ: 36, ajdG: 0.01, ajdJ: 0.005, flip: null },
+            "Murcia": { itpG: 0.08, itpJ: 0.03, limJ: 40, ajdG: 0.015, ajdJ: 0.001, flip: 0.02 },
+            "Navarra": { itpG: 0.06, itpJ: 0.06, limJ: 0, ajdG: 0.005, ajdJ: 0.005, flip: null },
+            "País Vasco": { itpG: 0.07, itpJ: 0.04, limJ: 0, ajdG: 0.005, ajdJ: 0.005, flip: null } 
+        };
+
+        // --- 2. FUNCIONES DE IMPUESTOS PROGRESIVOS ---
+        function calcProgressive(price, brackets) {
+            let totalTax = 0;
+            let remaining = price;
+            for (let i = 0; i < brackets.length; i++) {
+                let lowerLimit = brackets[i][0];
+                let upperLimit = i + 1 < brackets.length ? brackets[i+1][0] : Infinity;
+                let rate = brackets[i][1];
+                
+                if (price > lowerLimit) {
+                    let amountInBracket = Math.min(price, upperLimit) - lowerLimit;
+                    totalTax += amountInBracket * rate;
+                }
+            }
+            return totalTax;
+        }
+
+        function calculateProgressiveITP(price, typeName) {
+            switch(typeName) {
+                case "prog_aragon":
+                    return calcProgressive(price, [[0, 0.08], [400000, 0.085], [450000, 0.09], [500000, 0.095], [750000, 0.10]]);
+                case "prog_asturias":
+                    return calcProgressive(price, [[0, 0.08], [300000, 0.09], [500000, 0.10]]);
+                case "prog_baleares":
+                    return calcProgressive(price, [[0, 0.08], [400000, 0.09], [600000, 0.10], [1000000, 0.12], [2000000, 0.13]]);
+                case "prog_catalunya":
+                    return calcProgressive(price, [[0, 0.10], [1000000, 0.11]]);
+                case "prog_extremadura":
+                    return calcProgressive(price, [[0, 0.08], [360000, 0.10], [600000, 0.11]]);
+                default:
+                    return price * 0.06; // Fallback
+            }
+        }
+
+        // --- 3. LÓGICA PRINCIPAL (CEREBRO) ---
+        const GASTOS_FIJOS = 0.015; // 1.5% Notaría, Gestoría, Tasación, Registro
+
+        // Función de Valor Actual (Préstamo Máximo por ingresos)
+        function calcPresentValue(rate, nper, pmt) {
+            if (rate === 0) return -pmt * nper;
+            return pmt * (1 - Math.pow(1 + rate, -nper)) / rate;
+        }
+        
+        // Función de Cuota (PMT - Para calcular la cuota real)
+        function calcPMT(rate, nper, pv) {
+            if (rate === 0) return pv / nper;
+            return pv * rate / (1 - Math.pow(1 + rate, -nper));
+        }
+
+        function getTaxes(price, ccaa, tipoInmueble, edad, isFlipping) {
+            const rules = taxData[ccaa];
+            let taxTotalAmount = 0;
+            let label = "";
+            let principalTax = 0;
+            let principalLabel = "";
+            let ajdAmount = 0;
+            let ajdLabel = "";
+
+            if (tipoInmueble === 'segunda_mano') {
+                if (isFlipping && rules.flip !== null) {
+                    principalTax = price * rules.flip;
+                    principalLabel = `ITP Reventa (${(rules.flip*100).toFixed(1)}%)`;
+                } else {
+                    let isYoung = rules.limJ > 0 && edad <= rules.limJ;
+                    if (isYoung) {
+                        principalTax = price * rules.itpJ;
+                        principalLabel = `ITP Reducido (${(rules.itpJ*100).toFixed(1)}%)`;
+                    } else {
+                        if (typeof rules.itpG === 'string') {
+                            principalTax = calculateProgressiveITP(price, rules.itpG);
+                            let tipoEfectivo = price > 0 ? (principalTax / price * 100).toFixed(2) : 0;
+                            principalLabel = `ITP Progresivo (~${tipoEfectivo}%)`;
+                        } else {
+                            principalTax = price * rules.itpG;
+                            principalLabel = `ITP (${(rules.itpG*100).toFixed(1)}%)`;
+                        }
+                    }
+                }
+                taxTotalAmount = principalTax;
+                label = principalLabel; // Solo hay un impuesto principal
+            } else {
+                // Obra Nueva
+                let ivaRate = (tipoInmueble === 'obra_nueva_vpo') ? 0.04 : 0.10;
+                if (rules.isIgic) {
+                    ivaRate = (tipoInmueble === 'obra_nueva_vpo') ? 0.0 : 0.065; // Simplificación Canarias
+                    principalLabel = `IGIC (${(ivaRate*100).toFixed(1)}%)`;
+                } else {
+                    principalLabel = `IVA (${(ivaRate*100).toFixed(1)}%)`;
+                }
+                
+                let isYoungAJD = rules.limJ > 0 && edad <= rules.limJ;
+                let ajdRate = isYoungAJD ? rules.ajdJ : rules.ajdG;
+                
+                principalTax = price * ivaRate;
+                ajdAmount = price * ajdRate;
+                ajdLabel = `AJD (${(ajdRate*100).toFixed(2)}%)`;
+                
+                taxTotalAmount = principalTax + ajdAmount;
+                label = `${principalLabel} + ${ajdLabel}`;
+            }
+
+            return { 
+                amount: taxTotalAmount, 
+                label: label,
+                principalTax: principalTax,
+                principalLabel: principalLabel,
+                ajdAmount: ajdAmount,
+                ajdLabel: ajdLabel
+            };
+        }
+
+        function formatCurrency(num) {
+            return Math.round(num).toLocaleString('es-ES') + ' €';
+        }
+
+        function calculate() {
+            // Recoger inputs estáticos
+            const ccaa = document.getElementById('ccaa').value;
+            const tipoInmueble = document.getElementById('tipo_inmueble').value;
+            const edad = parseInt(document.getElementById('edad').value) || 40;
+            const isFlipping = document.getElementById('flipping').value === 'si';
+            
+            const ingresos = parseFloat(document.getElementById('ingresos').value) || 0;
+            const ahorros = parseFloat(document.getElementById('ahorros').value) || 0;
+            const deudas = parseFloat(document.getElementById('deudas').value) || 0;
+            const interesAnual = parseFloat(document.getElementById('interes').value) || 0;
+            const años = parseInt(document.getElementById('plazo').value) || 30;
+
+            // Recoger inputs dinámicos de condiciones (porcentajes convertidos a decimal)
+            const RATIO_ENDEUDAMIENTO = (parseFloat(document.getElementById('ratio_endeudamiento').value) || 35) / 100;
+            const LTV_MAXIMO = (parseFloat(document.getElementById('ltv_banco').value) || 80) / 100;
+
+            // 1. Calcular Cuota Máxima
+            const cuotaMax = (ingresos * RATIO_ENDEUDAMIENTO) - deudas;
+            if (cuotaMax <= 0) {
+                renderError("La capacidad de endeudamiento es nula o negativa.");
+                return;
+            }
+
+            // 2. Calcular Préstamo Máximo por Capacidad de Pago (PV)
+            const rMensual = (interesAnual / 100) / 12;
+            const nMeses = años * 12;
+            const prestamoMaxCapacidad = calcPresentValue(rMensual, nMeses, cuotaMax);
+
+            // 3. Algoritmo de Búsqueda Binaria para encontrar el Precio Máximo de Compra
+            let low = 0;
+            let high = ahorros + prestamoMaxCapacidad; // El límite absoluto teórico
+            let bestPrice = 0;
+            let finalTaxes = null;
+            let prestamoUsado = 0;
+
+            // 60 iteraciones garantizan precisión de céntimos
+            for (let i = 0; i < 60; i++) {
+                let mid = (low + high) / 2;
+                
+                let calcTax = getTaxes(mid, ccaa, tipoInmueble, edad, isFlipping);
+                let gastosFijos = mid * GASTOS_FIJOS;
+                
+                // Necesidad de fondos para comprar a precio 'mid'
+                let fondosNecesarios = mid + calcTax.amount + gastosFijos;
+                
+                // Capacidad de fondos disponibles a precio 'mid'
+                let prestamoPermitidoBanco = mid * LTV_MAXIMO;
+                let prestamoReal = Math.min(prestamoPermitidoBanco, prestamoMaxCapacidad);
+                let fondosDisponibles = ahorros + prestamoReal;
+
+                if (fondosNecesarios <= fondosDisponibles) {
+                    bestPrice = mid;
+                    finalTaxes = calcTax;
+                    prestamoUsado = prestamoReal;
+                    low = mid; // Podemos intentar buscar un precio más alto
+                } else {
+                    high = mid; // Nos hemos pasado, buscar más bajo
+                }
+            }
+
+            // Seguridad por si ahorros es 0 y nunca entró al if
+            if (!finalTaxes) {
+                finalTaxes = getTaxes(0, ccaa, tipoInmueble, edad, isFlipping);
+            }
+
+            // Actualizar Interfaz Principal
+            document.getElementById('res_precio_max').innerText = formatCurrency(bestPrice);
+            
+            // Calculamos cuota real frente a máxima
+            const cuotaReal = calcPMT(rMensual, nMeses, prestamoUsado);
+            document.getElementById('res_cuota').innerText = formatCurrency(cuotaReal) + '/mes';
+            document.getElementById('res_cuota_sub').innerText = `Límite saludable: ${formatCurrency(cuotaMax)}`;
+            
+            document.getElementById('res_prestamo').innerText = formatCurrency(prestamoUsado);
+            
+            // Lógica de texto para ver si el cuello de botella fue el LTV o los Ingresos
+            if (prestamoUsado >= prestamoMaxCapacidad - 1) { // -1 por redondeos
+                document.getElementById('res_ltv_text').innerText = "Limitado por tus ingresos";
+            } else {
+                document.getElementById('res_ltv_text').innerText = "Limitado al " + (LTV_MAXIMO * 100) + "% LTV";
+            }
+
+            // Desglose
+            let entrada = bestPrice - prestamoUsado;
+            let gastosNotaria = bestPrice * GASTOS_FIJOS;
+            
+            document.getElementById('res_entrada').innerText = formatCurrency(entrada);
+            
+            // Actualizar interfaz con separación de ITP/IVA y AJD
+            document.getElementById('label_impuesto').innerText = finalTaxes.principalLabel;
+            document.getElementById('res_impuestos').innerText = formatCurrency(finalTaxes.principalTax);
+            
+            const rowAjd = document.getElementById('row_ajd');
+            if (finalTaxes.ajdAmount > 0) {
+                rowAjd.classList.remove('hidden');
+                document.getElementById('label_ajd').innerText = finalTaxes.ajdLabel;
+                document.getElementById('res_ajd').innerText = formatCurrency(finalTaxes.ajdAmount);
+            } else {
+                rowAjd.classList.add('hidden');
+            }
+
+            document.getElementById('res_gastos_fijos').innerText = formatCurrency(gastosNotaria);
+            
+            let ahorrosConsumidos = entrada + finalTaxes.amount + gastosNotaria;
+            document.getElementById('res_ahorros_consumidos').innerText = formatCurrency(ahorrosConsumidos);
+
+            // --- ACTUALIZAR PANEL DE AUDITORÍA (DEBUG) ---
+            document.getElementById('dbg_ingresos').innerText = ingresos.toLocaleString('es-ES');
+            document.getElementById('dbg_deudas').innerText = deudas.toLocaleString('es-ES');
+            
+            // Actualizar textos dinámicos de las fórmulas
+            document.getElementById('dbg_formula_cuota').innerText = "Fórmula: (Ingresos * " + (RATIO_ENDEUDAMIENTO * 100) + "%) - Deudas";
+            document.getElementById('dbg_ratio_val').innerText = RATIO_ENDEUDAMIENTO.toString();
+
+            document.getElementById('dbg_cuota').innerText = cuotaMax.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('dbg_cuota_va').innerText = cuotaMax.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            document.getElementById('dbg_tasa_mensual').innerText = (rMensual * 100).toFixed(4);
+            document.getElementById('dbg_meses').innerText = nMeses;
+            document.getElementById('dbg_prestamo_cap').innerText = prestamoMaxCapacidad.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('dbg_prestamo_cap_2').innerText = prestamoMaxCapacidad.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            let reglaFiscal = "";
+            if(tipoInmueble === 'segunda_mano') {
+                if(isFlipping) reglaFiscal = taxData[ccaa].flip !== null ? "Reventa Profesional (Tipo Fijo Bonificado)" : "Reventa Profesional no bonificada en esta CCAA (Aplica General)";
+                else reglaFiscal = (taxData[ccaa].limJ > 0 && edad <= taxData[ccaa].limJ) ? "ITP Bonificado Joven" : "ITP General / Progresivo";
+            } else {
+                reglaFiscal = tipoInmueble === 'obra_nueva_vpo' ? "IVA Superreducido (VPO) + AJD" : "IVA Reducido (Libre) + AJD";
+            }
+            document.getElementById('dbg_regla_impuesto').innerText = reglaFiscal;
+            document.getElementById('dbg_tipo_impuesto').innerText = finalTaxes.label;
+
+            document.getElementById('dbg_precio_final').innerText = bestPrice.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('dbg_precio_final_2').innerText = bestPrice.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('dbg_impuestos_calc').innerText = finalTaxes.amount.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('dbg_fijos_calc').innerText = gastosNotaria.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            let fondosNecesariosVal = bestPrice + finalTaxes.amount + gastosNotaria;
+            document.getElementById('dbg_necesarios').innerText = fondosNecesariosVal.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            document.getElementById('dbg_ahorros').innerText = ahorros.toLocaleString('es-ES');
+            document.getElementById('dbg_prestamo_real').innerText = prestamoUsado.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            let fondosDisponiblesVal = ahorros + prestamoUsado;
+            document.getElementById('dbg_disponibles').innerText = fondosDisponiblesVal.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // Actualizar etiqueta del LTV en el panel de Debug
+            document.getElementById('dbg_ltv_container').innerHTML = "Límite Banco (" + (LTV_MAXIMO * 100) + "% P):<br><span id='dbg_ltv' class='text-white text-sm'>0</span> €";
+            document.getElementById('dbg_ltv').innerText = (bestPrice * LTV_MAXIMO).toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('dbg_prestamo_utilizado').innerText = prestamoUsado.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        function renderError(msg) {
+            document.getElementById('res_precio_max').innerText = "0 €";
+            document.getElementById('res_cuota').innerText = "0 €";
+            document.getElementById('res_cuota_sub').innerText = "Límite saludable: 0 €";
+            document.getElementById('res_prestamo').innerText = "0 €";
+            document.getElementById('res_entrada').innerText = "0 €";
+            document.getElementById('res_impuestos').innerText = "0 €";
+            document.getElementById('res_gastos_fijos').innerText = "0 €";
+            document.getElementById('res_ahorros_consumidos').innerText = "0 €";
+        }
+
+        window.onload = () => {
+            // Poblar select CCAA
+            const selectCCAA = document.getElementById('ccaa');
+            Object.keys(taxData).sort().forEach(ccaa => {
+                let option = document.createElement('option');
+                option.value = ccaa;
+                option.text = ccaa;
+                if(ccaa === 'Galicia') option.selected = true; // Modificado para seleccionar Galicia por defecto
+                selectCCAA.appendChild(option);
+            });
+
+            // Añadir listeners a todos los inputs
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculate);
+            });
+
+            // Lógica UI Flipping: Desactiva edad si es Flipping
+            document.getElementById('flipping').addEventListener('change', (e) => {
+                const edadInput = document.getElementById('edad');
+                if(e.target.value === 'si') {
+                    edadInput.disabled = true;
+                    edadInput.classList.add('opacity-50', 'cursor-not-allowed');
+                    edadInput.title = "Incompatible: Las bonificaciones por edad exigen que sea vivienda habitual, no para reventa.";
+                } else {
+                    edadInput.disabled = false;
+                    edadInput.classList.remove('opacity-50', 'cursor-not-allowed');
+                    edadInput.title = "";
+                }
+            });
+
+            // Lógica UI Tipo Inmueble: Flipping solo tiene sentido financiero en Segunda Mano
+            document.getElementById('tipo_inmueble').addEventListener('change', (e) => {
+                const flipSelect = document.getElementById('flipping');
+                if(e.target.value !== 'segunda_mano') {
+                    flipSelect.value = 'no';
+                    flipSelect.disabled = true;
+                    flipSelect.classList.add('opacity-50', 'cursor-not-allowed');
+                    
+                    const edadInput = document.getElementById('edad');
+                    edadInput.disabled = false;
+                    edadInput.classList.remove('opacity-50', 'cursor-not-allowed');
+                    edadInput.title = "";
+                } else {
+                    flipSelect.disabled = false;
+                    flipSelect.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            });
+
+            // Toggle Panel Auditoría
+            document.getElementById('toggle_debug').addEventListener('click', () => {
+                const content = document.getElementById('debug_content');
+                content.classList.toggle('hidden');
+            });
+
+            // Primera ejecución
+            calculate();
+        };
+    </script>
+</body>
+</html>
